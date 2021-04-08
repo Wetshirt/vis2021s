@@ -104,6 +104,25 @@
                 var objectKeys = document.getElementById("ObjectKeys")
 
 
+
+                document.getElementById("ObjectKeys").addEventListener('change', function(evt){
+					if(evt.target.value == 'selectValue' ){
+						return;
+					}
+				
+                    //clear container
+                    if (treemapContainer.innerHTML.length) {
+                        treemapContainer.innerHTML = ''
+                    }
+
+
+                    dataClassifier(objectKeys.value, function(data, layers){
+                        node = getNode(data, layers, treemapContainer)
+                        treemapContainer.appendChild(node)
+                    })
+				})
+
+
 				dataLoader('', function(){
 					dataClassifier(objectKeys.value, function(data, layers){
 						node = getNode(data, layers, treemapContainer)
