@@ -1,14 +1,226 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>D3 Page Template</title>
+    <title>Lab 8</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+
+        h1, div {
+          background-color: rgba(255, 255, 0, 0.1);
+          font-family: 'Noto Serif JP', serif;
+          font-size: 24pt;
+          border: solid 1px black;
+          width: 90%;
+          margin: 5px auto;
+          padding: 10px;
+        }
+
+        div {
+          font-size: 12pt;
+        }
+        
+        body {
+            background-color: rgba(255, 128, 255, 0.1);
+        }
+
+        video:hover {
+            box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        }
+
+        @keyframes letterDraw {
+          to { stroke-dashoffset: 0;}
+        }
+        .mysvg .line {
+         fill: none;
+         stroke-width: 4;
+         stroke: #000;
+         stroke-linecap: round;
+         stroke-linejoin: round;
+        }
+        .mysvg .line .line-1 {
+         stroke-dasharray: 120;
+         stroke-dashoffset: 120;
+         animation: letterDraw .5s linear forwards;
+         
+
+        }
+        .mysvg .line .line-2 {
+          stroke-dasharray: 150;
+          stroke-dashoffset: 150;
+          animation: letterDraw .5s linear .5s forwards;
+        }
+        .mysvg .line .line-3 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 1s forwards;
+        }
+        .mysvg .line .line-4 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 1.5s forwards;
+        }
+        .mysvg .line .line-5 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 2s forwards;
+        }
+
+        .mysvg .line .line-6 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 2.5s forwards;
+        }
+        .mysvg .line .line-7 {
+          stroke-dasharray: 150;
+          stroke-dashoffset: 150;
+          animation: letterDraw .5s linear 3s forwards;
+        }
+        .mysvg .line .line-8 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 3.5s forwards;
+        }
+        .mysvg .line .line-9 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 4s forwards;
+        }
+        .mysvg .line .line-10 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 4.5s forwards;
+        }
+
+        .mysvg .line .line-11 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 5s forwards;
+        }
+        .mysvg .line .line-12 {
+         stroke-dasharray: 120;
+         stroke-dashoffset: 120;
+         animation: letterDraw .5s linear 5.5s forwards;
+        }
+        .mysvg .line .line-13 {
+          stroke-dasharray: 150;
+          stroke-dashoffset: 150;
+          animation: letterDraw .5s linear 6s forwards;
+        }
+        .mysvg .line .line-14 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 6.5s forwards;
+        }
+        .mysvg .line .line-15 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 7s forwards;
+        }
+        .mysvg .line .line-16 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 7.5s forwards;
+        }
+
+        .mysvg .line .line-17 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 8s forwards;
+        }
+
+        .mysvg .line .line-18 {
+          stroke-dasharray: 180;
+          stroke-dashoffset: 180;
+          animation: letterDraw .5s linear 8.5s forwards;
+        }
+    </style>
     <script src="http://d3js.org/d3.v6.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
 </head>
 <body>
+    <h1>
+        lab08 漢字書寫 (鉛筆字) (毛筆字也OK!) Path Animation
+    </h1>
+    <div>
+      限定使用 D3.js，參考以下影片。
+      <ul>
+        <li><a href="https://bl.ocks.org/basilesimon/f164aec5758d16d51d248e41af5428e4">Animate path in D3</a></li>
+        <li><a href="https://codepen.io/MyXoToD/post/howto-self-drawing-svg-animation">"Self-Drawing" SVG</a></li>
+        <li><a href="https://stackoverflow.com/questions/15275362/how-to-transition-a-path-in-d3-js">How to transition a path in d3.js</a></li>
+        <li><a href="https://css-tricks.com/svg-line-animation-works/">How SVG Line Animation Works</a></li>
+        <li><a href="http://blog.roachking.net/blog/2014/10/31/osolve-team-drawing-animation/">使用 SVG 將圖片做成動畫</a></li>
+        <li><a href="https://www.hesyifei.com/">何一非</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <video width="400" controls loop autoplay>
+        <source src="3.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div>
+      展示區 (姓名)
+      <hr>
+     <svg class="mysvg" height = "500" width = "500" x="0" y="0" viewBox="0 0 300 300">
+      <g class="line">
+        <path class="line-1" d="M 59.822762,62.851762 C 59.124698,60.757569 56.715167,58.18238 55.279263,56.541346 54.644228,55.815594 53.054149,54.504994 52.502678,53.512344 52.3342,53.209089 52.3344,52.839233 52.25026,52.502678 c 0.410188,0 3.281401,2e-6 3.281419,10e-7 3.792724,-0.210707 7.558738,-0.626216 11.358753,-0.757251 6.627947,-0.22855 13.308965,0 19.940921,0 1.766917,0 3.537927,0.120193 5.300751,0 1.947067,-0.132754 3.857501,-0.640365 5.805585,-0.75725 2.267671,-0.13606 4.543901,0.04286 6.815251,0 4.20704,-0.07938 8.41393,-0.166561 12.62084,-0.252417 3.5341,-0.07212 7.074,-0.02484 10.6015,-0.252416 0.22407,-0.01446 8.17973,-0.907266 8.32975,-0.75725 0.65885,0.658851 -1.4949,2.436561 -1.76692,2.776584 -3.02605,3.782565 1.63094,-1.188508 -2.77658,3.533834 -1.48194,1.58779 -3.16818,3.114968 -4.5435,4.795917 -2.63907,3.225531 0.44309,0.06174 -1.26208,1.766917"/>
+
+        <path class="line-2" d="m 80.268518,51.493012 c 0.448614,2.701814 -0.450257,5.628209 0,8.32975 0.01955,0.117372 0.199202,0.145989 0.252415,0.252418 0.359402,0.718801 0.504833,2.552409 0.504833,3.281418"
+       id="path1120"/>
+        <path class="line-3" d="m 103.23844,50.988176 c 0,3.702114 0,7.404225 0,11.106338"
+       id="path1120"/>       
+        <path class="line-4" d="m 59.822762,62.851762 c 0.420695,-0.168278 0.809609,-0.481018 1.262084,-0.504833 1.179314,-0.06207 2.35364,0.210267 3.533835,0.252418 3.532582,0.126164 7.066899,0.211788 10.601502,0.252415 7.38124,0.08484 14.829325,-0.254598 22.212671,0 5.471406,0.188669 10.925186,0.252418 16.407086,0.252418 1.00786,0 8.40376,0.311885 9.33942,0 0.84647,-0.282157 1.67476,-0.206338 2.27175,-0.504833 0.16828,-0.08414 0.3718,-0.119383 0.50483,-0.252418 0.0595,-0.05949 0,-0.336555 0,-0.252415 1e-5,0.168278 1e-5,0.336555 1e-5,0.504833"
+       id="path1120"/>
+
+        <path class="line-5" d="m 60.580013,76.734682 c -0.08414,0.588973 -0.04062,1.210943 -0.252416,1.766917 -1.771086,4.649099 -1.314772,2.229866 -3.281418,5.805585 -1.241118,2.256578 -2.126789,4.758412 -3.281418,7.067669 -0.559559,1.119119 -1.514501,2.74732 -1.514501,4.038666 0,0.08414 0.16828,0 0.252418,0 0.925528,0 1.85193,0.0402 2.776585,0 3.354567,-0.145849 3.036297,-0.35034 6.562833,-0.757248 1.006488,-0.116133 2.032177,-0.07118 3.029,-0.252418 4.696775,-0.853958 0.936848,-0.75725 3.533836,-0.75725"
+       id="path1120"/>
+
+         <path class="line-6" d="m 74.967766,85.569268 c -2.177312,3.599733 -4.405297,7.324738 -7.067669,10.601502 -0.223732,0.275365 -1.941314,1.90001 -2.27175,2.271752 -1.554591,1.748918 -0.437377,0.856554 -2.271749,2.524168 -0.486249,0.44204 -1.077918,0.77092 -1.514502,1.26208 -0.249986,0.28124 -0.296111,0.69658 -0.504833,1.00967 -0.298847,0.44827 -0.692787,0.82637 -1.009666,1.26208 -0.469079,0.64499 -3.705293,6.13896 -3.281418,6.56284 0.170255,0.17025 3.861287,0 4.795917,0 4.643173,0 9.246918,-0.50484 13.88292,-0.50484"
+       id="path1120"/>
+
+         <path class="line-7" d="m 75.725014,110.55852 c 0.588973,-0.67311 0.918408,-1.73649 1.766919,-2.01933 0.42985,-0.14328 0.330562,0.84383 0.504833,1.26208 0.246457,0.59149 0.504833,1.17795 0.757251,1.76692 0.803161,1.87404 0.673613,1.75721 1.766916,3.53383 0.422601,0.68673 2.019335,2.45334 2.019335,3.029"
+       id="path1120"/>
+
+         <path class="line-8" d="m 54.522012,128.73253 c 0.145405,3.77906 2.752132,7.12462 4.543502,10.34908 0.460666,0.82921 1.004985,2.51949 1.766916,3.28142"
+       id="path1120"/>
+
+         <path class="line-9" d="m 65.880765,130.49944 c 0.420693,0.67312 0.834199,1.35077 1.262084,2.01934 3.442911,5.37955 1.661088,2.84447 4.795916,6.81525 0.239284,0.30309 3.029001,3.19876 3.029001,4.03867"
+       id="path1120"/>  
+
+        <path class="line-10" d="m 79.25885,127.21803 c 0.336555,0.75725 0.55949,1.57602 1.009668,2.27175 0.485889,0.75092 1.208183,1.32091 1.766917,2.01933 2.996229,3.74529 1.530532,2.40845 4.795916,6.058 0.555395,0.62074 1.209715,1.1478 1.766917,1.76692 0.744532,0.82726 0.147931,0.75725 0.757251,0.75725"/>
+
+        <path class="line-11" d="m 111.06336,77.744351 c -0.0841,0.504833 -0.0235,1.056735 -0.25242,1.514499 -0.37628,0.752562 -0.96889,1.378833 -1.5145,2.019334 -4.28489,5.030092 -8.61047,8.35805 -13.12567,12.873252"
+       id="path1120"/>
+        <path class="line-12" d="m 103.99569,86.578936 c 0.36933,9.780844 -0.40852,19.515954 -0.75725,29.280344 -0.1682,4.70952 -0.13006,9.42439 -0.25242,14.13533 -0.0831,3.19781 -0.50483,6.3967 -0.50483,9.59184"
+       id="path1120"/>       
+        <path class="line-13" d="m 120.40277,74.967766 c 2.48465,1.677797 4.47916,4.036673 6.05801,6.562836 0.96681,1.546905 -0.23839,0.266448 0.50483,1.009666"
+       id="path1120"/>
+
+        <path class="line-14" d="m 115.10202,87.336184 c 6.71177,-0.353867 13.46082,-0.504833 20.19334,-0.504833"
+       id="path1120"/>
+
+         <path class="line-15" d="m 114.34477,99.704606 c 8.07399,-0.280152 16.15125,-0.252418 24.23201,-0.252418"
+       id="path1120"/>
+
+         <path class="line-16" d="m 113.83994,114.84961 c 5.72474,0.28643 11.42979,0.33732 17.16434,0 2.10655,-0.12392 4.21313,-0.2718 6.31041,-0.50484 0.5801,-0.29004 0.3167,-0.25241 0.75726,-0.25241"/>
+
+         <path class="line-17" d="m 126.96561,82.540268 c -0.42069,1.766916 -0.94279,3.512724 -1.26208,5.300752 -0.10354,0.5798 0.0203,1.178293 0,1.766917 -0.0639,1.851866 -0.13684,3.703809 -0.25242,5.553167 -1.47316,23.570566 -0.004,-4.690647 -0.50483,10.349086 -0.14126,4.23768 -1.03963,8.3942 -1.26209,12.62083 -0.23426,4.45096 -0.25241,8.91457 -0.25241,13.37809"
+       id="path1120"/>
+
+         <path class="line-18" d="m 109.04402,135.29536 c 0.58897,-0.33655 1.12338,-0.79515 1.76692,-1.00967 0.89243,-0.29747 1.84739,-0.35811 2.77658,-0.50483 0.85698,-0.13531 9.1645,-1.42203 11.10634,-1.5145 3.5729,-0.17014 7.26163,0 10.85392,0"
+       id="path1120"/>    
+       
+
+      </g>
+    </svg>
+    </div>
+
+
     <script type="text/javascript">
       // Your beautiful D3 code will go here
+
+        
     </script>
-  </body>
-</html>
+  </html>
   
